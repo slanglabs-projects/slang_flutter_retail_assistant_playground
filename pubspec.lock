@@ -117,10 +117,10 @@ packages:
   slang_retail_assistant:
     dependency: "direct main"
     description:
-      path: "/Users/slang/phabricator/polyglot/client/slang-flutter-assistants/slang_retail_assistant"
-      relative: false
-    source: path
-    version: "8.5.0"
+      name: slang_retail_assistant
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "8.7.2"
   source_span:
     dependency: transitive
     description:

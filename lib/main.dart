@@ -1,19 +1,18 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:slang_retail_assistant/slang_retail_assistant.dart';
-import 'dart:convert';
 
 void main() {
-  runApp(const MaterialApp(
-    home: MyApp(),
+  runApp(new MaterialApp(
+    home: new MyApp(),
     debugShowCheckedModeBanner: false,
   ));
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
-
   @override
   _MyAppState createState() => _MyAppState();
 }
@@ -32,23 +31,12 @@ class _MyAppState extends State<MyApp>
   }
 
   void initSlangRetailAssistant() {
-    var positionConfig = AssistantUIPosition()
-      ..baseUIPosition = BaseUIPosition.BOTTOM_CENTER
-      ..offsetY = -56
-      ..isForced = true
-      ..isDraggable = true;
-
-    var assistantConfig = AssistantConfiguration()
-      ..assistantId = "fada21c719fc474ab8cccf9e7b3f41d8"
-      ..apiKey = "eaa55b96579748d98c07829401da98b0"
-      ..triggerStyle = AssistantTriggerStyle.FLAT
-      ..surfaceStyle = AssistantSurfaceStyle.CARD
-      ..uiPosition = positionConfig;
+    var assistantConfig = new AssistantConfiguration()
+      ..assistantId = "518c9c8b27e84961baad7800486289dc"
+      ..apiKey = "a241717f84164eb4815f1f87807d3e84";
 
     SlangRetailAssistant.initialize(assistantConfig);
     SlangRetailAssistant.setLifecycleObserver(this);
-
-
     SlangRetailAssistant.setOnSearchListener((searchInfo, searchUserJourney) {
       setState(() {
         try {
@@ -60,51 +48,72 @@ class _MyAppState extends State<MyApp>
         }
       });
     });
-
   }
 
   @override
   Widget build(BuildContext context) {
-    SlangRetailAssistant.getUI().showTrigger();
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Scaffold(
             appBar: AppBar(
-              title: const Text('Slang Flutter PlayGround App'),
+              title: const Text('Slang Retail PlayGround App'),
             ),
             body: Center(
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Container(height: 25),
-                    Container(
-                        height: 45.0,
-                        margin: const EdgeInsets.symmetric(horizontal: 17.0),
-                      child: TextField(
-                        controller: TextEditingController(text: _utteranceText),
-                        decoration: InputDecoration(
-                          labelText: 'Utterance Text',
-                          suffixIcon: GestureDetector(
-                            onTap: () {
-                              Clipboard.setData(ClipboardData(text: _utteranceText));
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text('Utterance text copied')),
-                              );
-                            },
-                            child: Icon(Icons.copy),
-                          ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                            borderSide: const BorderSide(
-                              color: Colors.blue,
-                              width: 2.0,
-                            ),
-                          ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Container(
+                              height: 45.0,
+                              margin:
+                              const EdgeInsets.fromLTRB(17.0, 0.0, 10.0, 0.0),
+                              child: TextField(
+                                controller:
+                                TextEditingController(text: _utteranceText),
+                                decoration: InputDecoration(
+                                  labelText: 'Utterance Text',
+                                  suffixIcon: GestureDetector(
+                                    onTap: () {
+                                      Clipboard.setData(
+                                          ClipboardData(text: _searchText));
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        const SnackBar(
+                                            content: Text('Utterance text copied')),
+                                      );
+                                    },
+                                    child: Icon(Icons.copy),
+                                  ),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    borderSide: const BorderSide(
+                                      color: Colors.blue,
+                                      width: 2.0,
+                                    ),
+                                  ),
+                                ),
+                                onChanged: (value) {
+                                  _utteranceText = value;
+                                },
+                              )),
                         ),
-                        onChanged: (value) {
-                          _utteranceText = value;
-                        },
-                      )
+                        Container(
+                          height: 42,
+                          width: 42,
+                          margin: const EdgeInsets.only(right: 10.0),
+                          decoration: const BoxDecoration(
+                            color: Colors.amber,
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Padding(
+                              padding: EdgeInsets.all(
+                                  8.0), // Adjust the padding as needed
+                              child: SlangConvaTriggerView(
+                                  imageAsset: 'assets/mic.png')),
+                        ),
+                      ],
                     ),
                     Container(height: 30), // set height
                     Flexible(
