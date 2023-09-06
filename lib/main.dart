@@ -32,8 +32,8 @@ class _MyAppState extends State<MyApp>
 
   void initSlangRetailAssistant() {
     var assistantConfig = new AssistantConfiguration()
-      ..assistantId = "518c9c8b27e84961baad7800486289dc"
-      ..apiKey = "a241717f84164eb4815f1f87807d3e84";
+      ..assistantId = "<AssistantId>"
+      ..apiKey = "<ApiKey>";
 
     SlangRetailAssistant.initialize(assistantConfig);
     SlangRetailAssistant.setLifecycleObserver(this);
